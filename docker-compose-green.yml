@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  miru-fe-green:
+    image: miru-fe:green
+    container_name: miru-fe-green
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3002:3000"

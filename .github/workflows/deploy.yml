@@ -1,0 +1,73 @@
+name: Deploy Zero Downtime with Rollback
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Upload to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "."
+          target: "/var/www/miru-fe"
+
+      - name: Deploy on VPS Blue/Green + Health Check + Rollback
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/miru-fe
+
+            # Determine active color
+            if docker ps --format '{{.Names}}' | grep -q 'miru-fe-blue'; then
+              active="blue"
+              next="green"
+              next_port=3002
+            else
+              active="green"
+              next="blue"
+              next_port=3001
+            fi
+
+            echo "Active: $active"
+            echo "Next: $next"
+
+            # Build next version
+            if ! docker compose -f docker-compose-$next.yml build; then
+              echo "Build failed → keeping old version"
+              exit 1
+            fi
+
+            # Start next container
+            docker compose -f docker-compose-$next.yml up -d
+
+            echo "Waiting health check on port $next_port ..."
+            for i in {1..20}; do
+              if curl -fs http://localhost:$next_port >/dev/null; then
+                echo "New version healthy!"
+                healthy=1
+                break
+              fi
+              sleep 3
+            done
+
+            if [ -z "$healthy" ]; then
+              echo "❌ New version UNHEALTHY — ROLLBACK"
+              docker compose -f docker-compose-$next.yml down
+              exit 1
+            fi
+
+            echo "Switching traffic... new version OK"
+            docker compose -f docker-compose-$active.yml down
