@@ -1,0 +1,83 @@
+const bannedWords = [
+  'bitch',
+  'buồi',
+  'cặc',
+  'cặk',
+  'cắt',
+  'cứk',
+  'cứt',
+  'chịch',
+  'dái',
+  'dú',
+  'điếm',
+  'địt',
+  'đệt',
+  'đéo',
+  'đụ',
+  'đĩ',
+  'đuỹ',
+  'fuck',
+  'kẹt',
+  'lồn',
+  'nứng',
+  'sủa',
+  'xoạc',
+  'zái',
+  'sex',
+  'hentai',
+  'bú cu',
+  'ăn lol',
+  'cái lol',
+  'lòi lol',
+  'củ lol',
+  'ngu lol',
+  'xàm lol',
+  'xam lol',
+  'xạo lol',
+  'con lol',
+  'đầu bùi',
+  'bố láo',
+  'chó má',
+  'mả mẹ',
+  'mả cha',
+  'kệ mẹ',
+  'chết mẹ',
+  'đút đít',
+  'xéo háng',
+  'húp sò',
+  'buscu',
+  'óc chó',
+  'chồng mông',
+  'banh háng',
+  'dimemay',
+  'thủ dâm',
+  'cailonme',
+  'cailonmemay',
+  'thangmatlon',
+  'condicho',
+  'condime',
+  'condimay',
+  'condimemay',
+  'ditmemay',
+  'ditmethangoccho',
+  'ditmecondicho',
+  'ditmecondi',
+  'ditmemayconcho',
+  'dit me may',
+  'dit me',
+  'diệ con me may',
+  'caiconcak',
+];
+
+const sanitizedBannedWords = [...new Set(bannedWords)].map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+const badWords = ({ input }: { input: string }): string | null => {
+  if (typeof input !== 'string') {
+    return null;
+  }
+
+  const regex = new RegExp(sanitizedBannedWords.join('|'), 'gi');
+  return input.replace(regex, '***');
+};
+
+export default badWords;

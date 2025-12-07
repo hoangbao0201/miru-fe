@@ -1,0 +1,3 @@
+name = "my-app-workshop"
+compatibility_flags = ["nodejs_compat"]
+```

@@ -1,0 +1,15 @@
+{
+  "name": "drm_tool",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "drm_tool_bg.wasm",
+    "drm_tool.js",
+    "drm_tool.d.ts"
+  ],
+  "main": "drm_tool.js",
+  "types": "drm_tool.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
