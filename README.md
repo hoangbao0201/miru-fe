@@ -7,11 +7,11 @@ Tài liệu này mô tả các sơ đồ thiết kế và mô hình của hệ t
 ## 📋 Mục lục
 
 ### Mô hình Tổng quan
-- [Use Case Diagram - Tổng quan](#usecase-general)
+- [Use Case Diagram - General Overview](#usecase-general)
 - [Class Diagram](#class)
-- [Entity-Relationship Diagram](#erd-entity-relationship)
+- [Entity-Relationship Diagram - Links](#erd-entity-relationship)
 - [Entity-Relationship Modeling](#erd-entity-attribute)
-- [Activity Diagram - Tổng quan](#erd-activity-general)
+- [Activity Diagram - General Overview](#erd-activity-general)
 
 ### Chức năng Người dùng
 - [Xác thực (Authentication)](#ud-auth)
@@ -39,7 +39,7 @@ Tài liệu này mô tả các sơ đồ thiết kế và mô hình của hệ t
 
 ## 🎯 Mô hình Tổng quan
 
-### Use Case Diagram - Tổng quan {#usecase-general}
+### Use Case Diagram - General Overview {#usecase-general}
 
 Sơ đồ use case tổng quan của toàn bộ hệ thống, mô tả các actor và các use case chính.
 
@@ -55,7 +55,7 @@ Mô hình class diagram mô tả cấu trúc các class và mối quan hệ gi�
 
 ---
 
-### Entity-Relationship Diagram - Liên kết {#erd-entity-relationship}
+### Entity-Relationship Diagram - Links {#erd-entity-relationship}
 
 Sơ đồ ERD mô tả mối quan hệ giữa các entity trong cơ sở dữ liệu.
 
@@ -71,7 +71,7 @@ Mô hình ERD chi tiết mô tả các thuộc tính và mối quan hệ của c
 
 ---
 
-### Activity Diagram - Tổng quan {#erd-activity-general}
+### Activity Diagram - General Overview {#erd-activity-general}
 
 Sơ đồ activity tổng quan mô tả luồng hoạt động chính của hệ thống.
 
